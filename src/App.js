@@ -16,7 +16,7 @@ import ConnectedContainer from "./components/ConnectedContainer";
 const { SystemProgram } = web3;
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [gifLoading, setGifLoading] = useState(false);
 
   const [walletAddress, setWalletAddress] = useRecoilState(walletAddressState);
@@ -98,6 +98,7 @@ const App = () => {
 
   useEffect(() => {
     if (walletAddress) {
+      setLoading(true);
       console.log("Fetching GIF list...");
       getGifList();
     }
@@ -113,7 +114,11 @@ const App = () => {
 
   const renderBody = () => {
     if (loading || gifLoading) {
-      return <div>Loading...</div>;
+      return (
+        <div class="center">
+          <div class="loader"></div>
+        </div>
+      );
     }
 
     if (gifList === null) {
